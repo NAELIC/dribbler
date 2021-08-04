@@ -6,16 +6,22 @@
 static naelic::SWO swo;
 // DigitalOut led(LED1);
 
+// Override mbed printf implementation
+FileHandle *mbed::mbed_override_console(int)
+{
+  return &swo;
+}
+
 int main()
 {
   // com::init();
-  // motor::init(); 
+  motor::init();
 
-  // motor::motor_hall_set(true, 500);
+  motor::motor_hall_set(true, 500);
 
   while (true)
   {
-    // motor::tick();
+    motor::tick();
     // com::tick();
   }
 }

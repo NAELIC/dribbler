@@ -19,6 +19,9 @@ static int hall_last_change_moving = 0;
 static int encoder_last_ok = 0;
 static bool safe_mode = true;
 
+#include <swo.h>
+
+static naelic::SWO swo;
 // Consecutive phases
 static int motor_phases[6][3] = {
     //    U   V   W
@@ -70,6 +73,12 @@ namespace motor
         u_pwm.write(0);
         v_pwm.write(0);
         w_pwm.write(0);
+
+        u_pwm.period_us(50);
+
+        v_pwm.period_us(50);
+
+        w_pwm.period_us(50);
     }
 
     int hall_value()
@@ -138,11 +147,22 @@ namespace motor
             w_pwm.write(0);
         }
 
+        // swo.print("u");
+        // swo.println(u);
+        // swo.print("v");
+        // swo.println(v);
+        // swo.print("w");
+        // swo.println(w);
+        // u_pwm.write(0.5f);
+
         if (motor_on)
         {
-            if (u >= 0)
+            
+            // if (u >= 0)
+            if (u > 0)
             {
-                u_pwm.write(u);
+                // u_pwm.write(u);
+                u_pwm.write(0.0f);
             }
 
             if (stopped || u != 0)
@@ -151,9 +171,11 @@ namespace motor
                     u_sd.write(1);
             }
 
-            if (v >= 0)
+            // if (v >= 0)
+            if (v > 0)
             {
-                v_pwm.write(v);
+                // v_pwm.write(0.5f);
+                v_pwm.write(0.0f);
             }
 
             if (stopped || v != 0)
@@ -162,9 +184,11 @@ namespace motor
                     v_sd.write(1);
             }
 
-            if (w >= 0)
+            // if (w >= 0)
+            if (w > 0)
             {
-                w_pwm.write(w);
+                w_pwm.write(0.0f);
+                // w_pwm.write(w);
             }
 
             if (stopped || w != 0)
