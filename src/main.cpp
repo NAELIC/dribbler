@@ -14,14 +14,15 @@ FileHandle *mbed::mbed_override_console(int)
 
 int main()
 {
-  // com::init();
-  motor::init();
+  com::init();
+  // motor::init();
 
-  motor::motor_hall_set(true, 500);
+  // motor::motor_hall_set(true, 500);
 
   while (true)
   {
-    motor::tick();
-    // com::tick();
+    // motor::tick();
+    com::tick();
+    ThisThread::sleep_for(100ms);
   }
 }
